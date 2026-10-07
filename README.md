@@ -18,6 +18,19 @@ g++ -std=c++20 -O2 test.cpp -o ufc_test && ./ufc_test
 
 Run from this folder (it looks for `data/`). Partial names work if unique (`profile adesanya`).
 
+### AI-written scouting reports (optional, local)
+
+`describe.ps1` feeds a fighter's `profile` output to a local [Ollama](https://ollama.com) model and asks
+for a one-paragraph scouting report built only from those numbers.
+
+```powershell
+ollama pull llama3.2:3b                         # ~2 GB, fits on a 6 GB laptop GPU
+.\describe.ps1 "Islam Makhachev"
+.\describe.ps1 adesanya -Model llama3.1:8b      # better prose, needs more free RAM/VRAM
+```
+
+Small models can still slip in facts that aren't in the stats; treat the paragraph as a draft.
+
 ## How it works
 
 - **No leakage.** The dataset's `*_total` career columns are scrape-time snapshots, so they're ignored.
